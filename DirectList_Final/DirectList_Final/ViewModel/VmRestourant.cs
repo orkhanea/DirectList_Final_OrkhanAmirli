@@ -13,5 +13,6 @@ namespace DirectList_Final.ViewModel
         public Banner Banner { get; set; }
         public CommentPost CommentPost { get; set; }
         public Reservation Reservation { get; set; }
+        public List<string> favourite { get; set; }
     }
 }

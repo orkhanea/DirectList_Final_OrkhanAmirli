@@ -11,5 +11,6 @@ namespace DirectList_Final.ViewModel
         public List<Plan> Plan { get; set; }
         public List<Blog> Blog { get; set; }
         public List<Restourant> Restourant { get; set; }
+
     }
 }

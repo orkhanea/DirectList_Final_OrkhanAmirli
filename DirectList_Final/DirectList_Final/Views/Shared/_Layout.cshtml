@@ -1,4 +1,13 @@
-﻿@model VmLayout
+﻿@inject IHttpContextAccessor _httpContextAccessor
+@{ 
+    string oldData = _httpContextAccessor.HttpContext.Request.Cookies["favourites"];
+    int favourites = 0;
+    if (!string.IsNullOrEmpty(oldData))
+    {
+        favourites = oldData.Split("-").Length;
+    }
+}
+@model VmLayout
 
 <!doctype html>
 <html lang="en">
@@ -29,7 +38,7 @@
 
         <header class="header-global">
             <nav id="navbar-main" class="navbar navbar-main fixed-top navbar-expand-lg navbar-transparent navbar-light headroom">
-                <div class="container">
+                <div class="container p-0">
                     <div class="logo">
                         <a><img src="~/assets/images/@Model.Setting.Logo" class="img-fluid" alt=""></a>
                     </div>
@@ -77,6 +86,18 @@
                             </div>
                         </div>
                     </div>
+                    <div class="favourite">
+                        <a class="btn ml-5 position-relative" style="color: #fff !important;">Favourites
+                        <span style="right: -5px !important;" class="@(favourites==0?"d-none":"") position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            @{ 
+                                if (favourites!=0)
+                                {
+                                    @favourites;
+                                }
+                            }
+                        </span>
+                        </a>
+                    </div>
                 </div>
             </nav>
         </header>
@@ -95,10 +116,8 @@
                         <div class="mt-4">
 
                             @{ foreach (var item in Model.SiteSocial)
-                               {
-                                    <a target="_blank" href="@item.Link" class="btn btn-neutral btn-icon-only btn-round btn-lg"><i class="@item.Icon"></i></a> 
-                               } 
-                             }
+                                {
+                    <a target="_blank" href="@item.Link" class="btn btn-neutral btn-icon-only btn-round btn-lg"><i class="@item.Icon"></i></a> } }
 
                         </div>
                     </div>

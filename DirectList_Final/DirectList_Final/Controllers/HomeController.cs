@@ -25,6 +25,11 @@ namespace DirectList_Final.Controllers
             VmHome model = new();
             model.Setting = _context.Settings.FirstOrDefault();
             model.SiteSocial = _context.SiteSocials.ToList();
+            model.Plan = _context.Plans.ToList();
+            model.Restourant = _context.Restourants.ToList();
+            model.Blog = _context.Blogs.Take(3).OrderByDescending(b => b.CreatedDate).ToList();
+
+            ViewBag.RestourantTags = _context.RestourantTags.ToList();
 
             return View(model);
         }

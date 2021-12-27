@@ -1,4 +1,6 @@
-﻿@{
+﻿@model VmHome 
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -20,32 +22,27 @@
         </div>
         <div class="container shape-container d-flex align-items-center py-lg">
             <div class="main-search-inner">
-                <h2 class="text-white display-2">Find Nearby Attractions</h2>
-                <h4 class="text-white">Expolore top-rated attractions, activities and more</h4>
-                <div class="main-search-input">
-                    <div class="main-search-input-item">
-                        <input type="text" placeholder="What are you looking for?" value="" />
-                    </div>
-                    <div class="main-search-input-item location">
-                        <div id="autocomplete-container">
-                            <input id="autocomplete-input" type="text" placeholder="Location">
-                        </div>
-                        <a href="#"><i class="fa fa-map-marker"></i></a>
+                <h2 class="text-white display-2">Find Restourants</h2>
+                <h4 class="text-white">Expolore restourants</h4>
+                <form class="main-search-input" asp-controller="Restourant" asp-action="Index" method="post">
+                    <div class="main-search-input-item" style="padding: 0 100px !important;">
+                        <input style="outline: none !important;" type="text" placeholder="What are you looking for?" name="SearchData" autocomplete="off" />
                     </div>
                     <div class="main-search-input-item">
-                        <select data-placeholder="All Categories" class="chosen-select custom-select">
-                            <option>All Categories</option>
-                            <option>Shops</option>
-                            <option>Hotels</option>
-                            <option>Restaurants</option>
-                            <option>Fitness</option>
-                            <option>Events</option>
+                        <select style="box-shadow: none !important;" name="SearchTagData" data-placeholder="All Categories" class="chosen-select custom-select">
+                            @{
+                                <option selected>All Categories</option>
+                                foreach (var tag in ViewBag.RestourantTags)
+                                {
+                                    <option value="@tag.Id" >@tag.Name</option>
+                                }
+                            }
                         </select>
                     </div>
-                    <a href="#" class="btn main-search-btn btn-radius btn-lg btn-white">
+                    <button type="submit" class="btn main-search-btn btn-radius btn-lg btn-white">
                         <span class="btn-inner--text">Search</span>
-                    </a>
-                </div>
+                    </button>
+                </form>
             </div>
         </div>
         <!-- SVG separator -->
@@ -60,109 +57,130 @@
     <div class="container">
         <div class="block-head text-center mb-5">
             <h2 class="head-line display-3">
-                Popular Categories
+                Restourants
             </h2>
-            <p class="lead mt-2 head-desc">Browse the most desirable categories</p>
+            <p class="lead mt-2 head-desc">Restourants we offer</p>
         </div>
     </div>
     <!-- Categories Carousel -->
     <div class="fullwidth-carousel-container">
         <div class="fullwidth-slick-carousel category-carousel">
             <!-- Item -->
-            <div class="fw-carousel-item">
-                <div class="category-box-container text-center">
-                    <div class="category-box">
-                        <div class="category-box-content">
-                            <div class="icon-title">
-                                <i class="fa-2x fa fa-bed"></i>
+            @{
+                foreach (var r in Model.Restourant)
+                {
+                    <div class="fw-carousel-item">
+                        <div class="category-box-container text-center">
+                            <div class="category-box">
+                                <div class="category-box-content">
+                                    <h3>
+                                        <a asp-controller="Restourant" asp-action="SingleRestourant" asp-route-Id="@r.Id" class="text-white">
+                                            @r.Name
+                                        </a>
+                                    </h3>
+                                    <span>
+                                        <small class="text-secondary badge badge-pill badge-success text-uppercase">
+                                            @{
+                                                var time = r.OpeningTime - r.OpeningTime.Date;
+                                                var time2 = r.ClosingTime - r.ClosingTime.Date;
+                                                var currentTime = DateTime.Now - DateTime.Now.Date;
+
+                                                if (currentTime > time && currentTime < time2)
+                                                {
+                                                    @("Open")
+                                                }
+                                                else
+                                                {
+                                                    @("Closed")
+                                                }
+
+                                            }
+                                        </small>
+                                    </span>
+                                </div>
+                                <div class="category-box-background" style="background-image: url('assets/images/@r.Logo')">
+                                </div>
                             </div>
-                            <h3>
-                                <a href="JavaScript:Void(0);" class="text-white">
-                                    Hotels
-                                </a>
-                            </h3>
-                            <span> <small>64 listings</small> </span>
-                        </div>
-                        <div class="category-box-background" style="background-image: url('assets/images/cat-img-6.jpg')">
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="fw-carousel-item">
-                <div class="category-box-container text-center">
-                    <div class="category-box">
-                        <div class="category-box-content">
-                            <div class="icon-title">
-                                <i class="fa-2x fa fa-shopping-bag"></i>
+                }
+                foreach (var r in Model.Restourant)
+                {
+                    <div class="fw-carousel-item">
+                        <div class="category-box-container text-center">
+                            <div class="category-box">
+                                <div class="category-box-content">
+                                    <h3>
+                                        <a asp-controller="Restourant" asp-action="SingleRestourant" asp-route-Id="@r.Id" class="text-white">
+                                            @r.Name
+                                        </a>
+                                    </h3>
+                                    <span>
+                                        <small class="text-secondary badge badge-pill badge-success text-uppercase">
+                                            @{
+                                                var time = r.OpeningTime - r.OpeningTime.Date;
+                                                var time2 = r.ClosingTime - r.ClosingTime.Date;
+                                                var currentTime = DateTime.Now - DateTime.Now.Date;
+
+                                                if (currentTime > time && currentTime < time2)
+                                                {
+                                                    @("Open")
+                                                }
+                                                else
+                                                {
+                                                    @("Closed")
+                                                }
+
+                                            }
+                                        </small>
+                                    </span>
+                                </div>
+                                <div class="category-box-background" style="background-image: url('assets/images/@r.Logo')">
+                                </div>
                             </div>
-                            <h3><a href="JavaScript:Void(0);" class="text-white">Shops</a></h3>
-                            <span> <small>14 listings</small> </span>
-                        </div>
-                        <div class="category-box-background" style="background-image: url('assets/images/cat-img-5.jpg')">
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="fw-carousel-item">
-                <div class="category-box-container text-center">
-                    <div class="category-box">
-                        <div class="category-box-content">
-                            <div class="icon-title">
-                                <i class="fa-2x fa fa-calendar"></i>
+                }
+                foreach (var r in Model.Restourant)
+                {
+                    <div class="fw-carousel-item">
+                        <div class="category-box-container text-center">
+                            <div class="category-box">
+                                <div class="category-box-content">
+                                    <h3>
+                                        <a asp-controller="Restourant" asp-action="SingleRestourant" asp-route-Id="@r.Id" class="text-white">
+                                            @r.Name
+                                        </a>
+                                    </h3>
+                                    <span>
+                                        <small class="text-secondary badge badge-pill badge-success text-uppercase">
+                                            @{
+                                                var time = r.OpeningTime - r.OpeningTime.Date;
+                                                var time2 = r.ClosingTime - r.ClosingTime.Date;
+                                                var currentTime = DateTime.Now - DateTime.Now.Date;
+
+                                                if (currentTime > time && currentTime < time2)
+                                                {
+                                                    @("Open")
+                                                }
+                                                else
+                                                {
+                                                    @("Closed")
+                                                }
+
+                                            }
+                                        </small>
+                                    </span>
+                                </div>
+                                <div class="category-box-background" style="background-image: url('assets/images/@r.Logo')">
+                                </div>
                             </div>
-                            <h3><a href="JavaScript:Void(0);" class="text-white">Events</a></h3>
-                            <span> <small>67 listings</small> </span>
-                        </div>
-                        <div class="category-box-background" style="background-image: url('assets/images/cat-img-2.jpg')">
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="fw-carousel-item">
-                <div class="category-box-container text-center">
-                    <div class="category-box">
-                        <div class="category-box-content">
-                            <div class="icon-title">
-                                <i class="fa-2x fa fa-glass"></i>
-                            </div>
-                            <h3><a href="JavaScript:Void(0);" class="text-white">Fitness</a></h3>
-                            <span> <small>27 listings</small> </span>
-                        </div>
-                        <div class="category-box-background" style="background-image: url('assets/images/cat-img-3.jpg')">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="fw-carousel-item">
-                <div class="category-box-container text-center">
-                    <div class="category-box">
-                        <div class="category-box-content">
-                            <div class="icon-title">
-                                <i class="fa-2x fa fa-glass"></i>
-                            </div>
-                            <h3><a href="JavaScript:Void(0);" class="text-white">Nightlife</a></h3>
-                            <span> <small>22 listings</small> </span>
-                        </div>
-                        <div class="category-box-background" style="background-image: url('assets/images/cat-img-4.jpg')">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="fw-carousel-item">
-                <div class="category-box-container text-center">
-                    <div class="category-box">
-                        <div class="category-box-content">
-                            <div class="icon-title">
-                                <i class="fa-2x fa fa-glass"></i>
-                            </div>
-                            <h3><a href="JavaScript:Void(0);" class="text-white">Eat & Drink</a></h3>
-                            <span> <small>127 listings</small> </span>
-                        </div>
-                        <div class="category-box-background" style="background-image: url('assets/images/cat-img-1.jpg')">
-                        </div>
-                    </div>
-                </div>
-            </div>
+                }
+            }
+
+
         </div>
     </div>
 </div>
@@ -275,27 +293,19 @@
     </div>
     <div class="container">
         <div class="row row-grid mt-5">
-            <div class="col-lg-4 text-center">
-                <div class="icon icon-lg icon-shape bg-gradient-white shadow rounded-circle text-primary">
-                    <i class="fa fa-search"></i>
-                </div>
-                <h5 class="text-white mt-3">Find Interesting Place</h5>
-                <p class="text-white mt-3">Proin dapibus nisl ornare diam varius tempus. Aenean a quam luctus, finibus tellus ut, convallis eros sollicitudin turpis.</p>
-            </div>
-            <div class="col-lg-4 text-center">
-                <div class="icon icon-lg icon-shape bg-gradient-white shadow rounded-circle text-primary">
-                    <i class="fa fa-phone-square"></i>
-                </div>
-                <h5 class="text-white mt-3">Contact a Few Owners</h5>
-                <p class="text-white mt-3">Maecenas pulvinar, risus in facilisis dignissim, quam nisi hendrerit nulla, id vestibulum metus nullam viverra porta purus.</p>
-            </div>
-            <div class="col-lg-4 text-center">
-                <div class="icon icon-lg icon-shape bg-gradient-white shadow rounded-circle text-primary">
-                    <i class="fa fa-user-plus"></i>
-                </div>
-                <h5 class="text-white mt-3">Make a Reservation</h5>
-                <p class="text-white mt-3">Faucibus ante, in porttitor tellus blandit et. Phasellus tincidunt metus lectus sollicitudin feugiat pharetra consectetur.</p>
-            </div>
+            @{
+                foreach (var p in Model.Plan)
+                {
+                    <div class="col-lg-4 text-center">
+                        <div class="icon icon-lg icon-shape bg-gradient-white shadow rounded-circle text-primary">
+                            <i class="@p.Icon"></i>
+                        </div>
+                        <h5 class="text-white mt-3">@p.Title</h5>
+                        <p class="text-white mt-3">@p.Text</p>
+                    </div>
+                }
+            }
+
         </div>
     </div>
 </div>
@@ -410,39 +420,22 @@
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <div class="row row-grid">
-                    <div class="col-lg-4">
-                        <div class="card card-lift--hover shadow border-0">
-                            <img class="img-fluid" src="assets/images/post-1.jpg" alt="list-logo">
-                            <div class="card-body py-4">
-                                <h5>Take a Look at Hotels for All Budgets</h5>
-                                <p>22 August 2018</p>
-                                <p class="description mb-4">Sed sed tristique nibh iam porta volutpat finibus. Donec in aliquet urneget mattis lorem. Pellentesque pellentesque</p>
-                                <a class="btn btn-primary" href="JavaScript:Void(0);">Read More</a>
+                    @{
+                        foreach (var b in Model.Blog)
+                        {
+                            <div class="col-lg-4">
+                                <div class="card card-lift--hover shadow border-0">
+                                    <img class="img-fluid" src="assets/images/@b.Image" alt="list-logo">
+                                    <div class="card-body py-4">
+                                        <h5>@b.Title</h5>
+                                        <p>@b.CreatedDate.ToString("d MMMM yyyy")</p>
+                                        <p class="description mb-4">@(b.Text.Length>100?b.Text.Substring(0,100)+"..." : b.Text)</p>
+                                        <a class="btn btn-primary" asp-controller="Blog" asp-action="SingleBlog" asp-route-Id="@b.Id">Read More</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card card-lift--hover shadow border-0">
-                            <img class="img-fluid" src="assets/images/post-2.jpg" alt="list-logo">
-                            <div class="card-body py-4">
-                                <h5>The 50 Greatest Street Arts In London</h5>
-                                <p>22 August 2018</p>
-                                <p class="description mb-4">Sed sed tristique nibh iam porta volutpat finibus. Donec in aliquet urneget mattis lorem. Pellentesque pellentesque</p>
-                                <a class="btn btn-primary" href="JavaScript:Void(0);">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card card-lift--hover shadow border-0">
-                            <img class="img-fluid" src="assets/images/post-3.jpg" alt="list-logo">
-                            <div class="card-body py-4">
-                                <h5>The Best Cofee Shops In Sydney Neighborhoods</h5>
-                                <p>22 August 2018</p>
-                                <p class="description mb-4">Sed sed tristique nibh iam porta volutpat finibus. Donec in aliquet urneget mattis lorem. Pellentesque pellentesque</p>
-                                <a class="btn btn-primary" href="JavaScript:Void(0);">Read More</a>
-                            </div>
-                        </div>
-                    </div>
+                        }
+                    }
                 </div>
             </div>
         </div>

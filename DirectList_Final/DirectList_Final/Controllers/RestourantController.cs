@@ -1,6 +1,7 @@
 ﻿using DirectList_Final.Data;
 using DirectList_Final.Models;
 using DirectList_Final.ViewModel;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,14 +19,32 @@ namespace DirectList_Final.Controllers
         {
            _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(string SearchData, int? SearchTagData)
         {
             VmRestourant model = new();
             model.Setting = _context.Settings.FirstOrDefault();
             model.Banner = _context.Banners.FirstOrDefault(b => b.Page == "Restourants");
             model.SiteSocial = _context.SiteSocials.ToList();
-            model.Restourants = _context.Restourants.Include(r => r.RestourantTagToRestourants).ThenInclude(rt => rt.RestourantTag).ToList();
+            model.Restourants = _context.Restourants
+                                .Include(r => r.RestourantTagToRestourants)
+                                .ThenInclude(rt => rt.RestourantTag)
+                                .Where(r => (SearchData!=null?r.Name.Contains(SearchData):true) &&
+                                            (SearchTagData!=null?r.RestourantTagToRestourants.Any(rt=>rt.RestourantTagId==SearchTagData):true)).ToList();
+            
+            ViewBag.RestourantTags = _context.RestourantTags.ToList();
 
+            string oldData = Request.Cookies["favourites"];
+
+            if (!string.IsNullOrEmpty(oldData))
+            {
+                model.favourite = oldData.Split("-").ToList();
+            }
+
+            if (model.Restourants.Count == 0)
+            {
+                TempData["SearchError"] = "Your search did not match any of them";
+            }
+           
             return View(model);
         }
 
@@ -99,6 +118,39 @@ namespace DirectList_Final.Controllers
 
             TempData["ReservError"] = "Please fill the blanks correctly";
             return RedirectToAction("SingleRestourant", new { Id = reservation.RestourantId });
+        }
+
+        public IActionResult AddToFavourites(int Id)
+        {
+            string oldData = Request.Cookies["favourites"];
+            string newData = null;
+
+            if (string.IsNullOrEmpty(oldData))
+            {
+                newData = Id.ToString();
+            }
+            else
+            {
+                List<string> favouriteList = oldData.Split("-").ToList();
+                if (favouriteList.Any(f => f == Id.ToString()))
+                {
+                    favouriteList.Remove(Id.ToString());
+                    newData = string.Join("-", favouriteList);
+                }
+                else
+                {
+                    newData = oldData + "-" + Id;
+                }
+            }
+
+            CookieOptions options = new CookieOptions()
+            {
+                Expires = DateTime.Now.AddMonths(1)
+            };
+
+            Response.Cookies.Append("favourites", newData, options);
+
+            return RedirectToAction("Index");
         }
     }
 }

@@ -30,43 +30,38 @@
         <div class="row">
             <!-- Search -->
             <div class="col-md-12 grid-full-width page-search mb-3">
-                <div class="main-search-input mt-0">
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="form-group">
-                            <input type="text" placeholder="What are you looking for?" class="form-control">
+                <form class="main-search-input mt-0" asp-controller="Restourant" asp-action="Index" method="post">
+                    <div class="col-lg-4 col-sm-8">
+                        <div class="form-group style="padding: 0 100px !important;"">
+                            <input style="outline: none !important; color: #4703b4 !important;" name="SearchData" type="text" placeholder="What are you looking for?" class="form-control" autocomplete="off">
                         </div>
                     </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="form-group">
-                            <input type="text" placeholder="Location" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <select class="custom-select my-1 mr-sm-2 new-select" id="inlineFormCustomSelectPref">
-                            <option selected>Choose...</option>
-                            <option value="1">Hotel</option>
-                            <option value="2">Bar</option>
-                            <option value="3">Food Courts</option>
+                    <div class="col-lg-4 col-sm-8">
+                        <select style="box-shadow: none !important;" name="SearchTagData" class="custom-select my-1 mr-sm-2 new-select" id="inlineFormCustomSelectPref">
+                            @{
+                                <option selected>All Tags</option>
+                                foreach (var tag in ViewBag.RestourantTags)
+                                {
+                                    <option value="@tag.Id">@tag.Name</option>
+                                }
+                            }
                         </select>
                     </div>
-                    <div class="col-lg-3 col-sm-6 text-right">
-                        <a class="btn main-search-btn btn-radius btn-lg btn-primary text-white"><span class="btn-inner--text">Search</span></a>
+                    <div class="col-lg-4 col-sm-8 text-right">
+                        <button type="submit" class="w-75 btn main-search-btn btn-radius btn-lg btn-primary text-white"><span class="btn-inner--text">Search</span></button>
                     </div>
-                </div>
+                </form>
             </div>
             <!-- Search Section / End -->
+            @{ 
+                if (TempData["SearchError"] != null)
+                {
+                        <div class="w-100 my-5"> <p style="font-size: 25px !important; font-weight: 600 !important; color: #dc1f43 !important;" class="text-center text-danger"> @TempData["SearchError"] </p> </div>
+                    TempData["SearchError"] = null;
+                }
+
+            }
             <div class="col-md-12">
-                <!-- Sorting - Filtering Section -->
-                <div class="row mt-4 mb-5">
-                    <div class="col-md-6">
-                        <!-- Layout Switcher -->
-                        <div class="layout-switcher">
-                            <a href="listings-grid-with-sidebar.html" class="grid"> <span class="round-pill d-block"><i class="fa fa-th"></i></span></a>
-                            <a href="listings-list-with-sidebar.html" class="list active"><span class="round-pill d-block"><i class="fa fa-align-justify"></i></span></a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Sorting - Filtering Section / End -->
                 <div class="row">
                     <!-- Listing Item -->
                     @{
@@ -81,7 +76,23 @@
                                         </div>
                                         <!-- Content -->
                                         <div class="listing-item-content">
-                                            <span class="badge badge-pill list-banner badge-success text-uppercase">Now Open</span>
+                                            <span class="badge badge-pill list-banner badge-success text-uppercase">
+                                                @{
+                                                    var time = item.OpeningTime - item.OpeningTime.Date;
+                                                    var time2 = item.ClosingTime - item.ClosingTime.Date;
+                                                    var currentTime = DateTime.Now - DateTime.Now.Date;
+
+                                                    if (currentTime > time && currentTime < time2)
+                                                    {
+                                                        @("Open")
+                                                    }
+                                                    else
+                                                    {
+                                                        @("Closed")
+                                                    }
+
+                                                }
+                                            </span>
                                             <div class="listing-item-inner">
                                                 <!-- <DirectlistRating [rate]="list.rating"></DirectlistRating> -->
                                                 <a asp-controller="Restourant" asp-action="SingleRestourant" asp-route-Id="@item.Id">
@@ -98,7 +109,7 @@
                                                 </div>
 
                                                 </div>
-                                            <span class="round-pill like-banner d-block bg-primary"><i class="fa fa-heart-o"></i></span>
+                                            <span class="round-pill like-banner d-block @(Model.favourite==null? "bg-primary": Model.favourite.Any(f=>f==item.Id.ToString())? "bg-danger":"bg-primary")"> <a style="color: #fff !important;" asp-controller="Restourant" asp-action="AddToFavourites" asp-route-Id="@item.Id"><i class="fa fa-heart-o"></i></a> </span>
                                         </div>
                                     </div>
                                 </div>
@@ -109,10 +120,10 @@
                 </div>
                 <!-- Pagination -->
                 <div class="clearfix"></div>
-                <div class="row">
-                    <div class="col-md-12">
+                <!--<div class="row">
+                    <div class="col-md-12">-->
                         <!-- Pagination -->
-                        <div class="mt-3">
+                        <!--<div class="mt-3">
                             <nav aria-label="Page navigation">
                                 <ul class="pagination">
                                     <li class="page-item">
@@ -140,7 +151,7 @@
                             </nav>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <!-- Pagination / End -->
             </div>
         </div>

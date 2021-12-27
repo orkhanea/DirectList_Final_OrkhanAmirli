@@ -1,0 +1,327 @@
+﻿@model VmBlog
+
+@{
+    ViewData["Title"] = "SingleBlog";
+}
+
+<div id="titlebar" class="gradient">
+    <div class="title-bar-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Blog Detail</h2>
+                    <span>Explore your search places</span>
+                    <!-- Breadcrumbs -->
+                    <nav id="breadcrumbs">
+                        <ul>
+                            <li><a>Home</a></li>
+                            <li>Blog</li>
+                            <li>Detail</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="title-overlay"></div>
+</div>
+<!-- Content -->
+@{
+    
+
+        <div class="content">
+            <div class="container">
+                <!-- Blog Posts -->
+                <div class="blog-page">
+                    <div class="row">
+                        <!-- Post Content -->
+                        <div class="col-lg-9 col-md-8 padding-right-30">
+                            <!-- Blog Post -->
+                            <div class="blog-post single-post">
+                                <!-- Img -->
+                                <img class="post-img img-fluid" src="~/assets/images/@Model.SingleBlog1.Image" alt="image">
+                                <!-- Content -->
+                                <div class="post-content">
+                                    <h3>@Model.SingleBlog1.Title</h3>
+                                    <ul class="post-meta">
+                                        <li>@Model.SingleBlog1.CreatedDate.ToString("MMMM d, yyyy")</li>
+                                        <li><a>@Model.SingleBlog1.Comments.Count Comments</a></li>
+                                    </ul>
+                                    <p>
+                                        @Model.SingleBlog1.Text
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Blog Post / End -->
+                            <!-- Post Navigation -->
+                            <ul id="posts-nav" class="margin-top-0 margin-bottom-45">
+                                <li class="next-post">
+                                    <button class="btn btn-1 btn-primary" type="button">Next</button>
+                                </li>
+                                <li class="prev-post">
+                                    <button class="btn btn-1 btn-primary" type="button"> Previous</button>
+                                </li>
+                            </ul>
+                            <!-- About Author -->
+                            <div class="about-author BlogAuthorStyle">
+                                <img src="~/assets/images/thumb-4.jpg" alt="image" />
+                                <div class="about-description" style="margin-left: 20px !important;">
+                                    <h4>@Model.SingleBlog1.CustomUser.Name @Model.SingleBlog1.CustomUser.Surname</h4>
+                                    <p>@Model.SingleBlog1.CustomUser.PhoneNumber @* AuthorDetailTextHere*@</p>
+                                </div>
+                            </div>
+                            <div class="margin-top-50"></div>
+                            <!-- Reviews -->
+                            <section class="comments">
+                                <h4 class="headline mb-3">Comments <span class="comments-amount">(@Model.SingleBlog1.Comments.Count)</span></h4>
+
+                                @{
+                                    foreach (var cm in @Model.SingleBlog1.Comments)
+                                    {
+                                        if (cm.ParentCommentId == null)
+                                        {
+                                            <div class="row pt-4 pl-4 pr-4 pb-0 list-img-wrap FullCommentStyle mb-4">
+                                                <div class="col-md-2 list-img" style="height: fit-content !important;"><img class="img-fluid rounded-circle" src="~/assets/images/default-avatar.png" alt="image"></div>
+                                                <div class="col-md-10">
+                                                    <div class="mb-5">
+                                                        <h5 class="text-primary m-0"> @cm.CommentPost.FullName </h5>
+                                                        <p style="font-size: 12px !important; color: #E39 !important;">
+                                                            @{
+                                                                var date = (DateTime.Now - cm.CreatedDate);
+                                                                if (date.Days == 0)
+                                                                {
+                                                                    if (date.Hours == 0)
+                                                                    {
+                                                                        if (date.Minutes == 0)
+                                                                        {
+                                                                            @(date.Seconds) @(" seconds before")
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @(date.Minutes) @(" minutes before")
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @(date.Hours) @(" hours before")
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    @(date.Days) @(" days before")
+                                                                }
+                                                            }
+                                                        </p>
+                                                        <p style="font-weight: 600 !important; color: darkslateblue !important;">
+                                                            @cm.Content
+                                                        </p>
+                                                    </div>
+
+                                                    <div>
+
+                                                        @{
+                                                            foreach (var cm2 in @Model.SingleBlog1.Comments)
+                                                            {
+
+
+                                                                if (cm2.ParentCommentId == cm.Id)
+                                                                {
+                                                                    <div class="row align-items-center">
+
+                                                                        <div class="col-md-2 list-img" style="height: fit-content !important;"><img class="img-fluid rounded-circle" src="~/assets/images/default-avatar.png" alt="image"></div>
+                                                                        <div class="col-md-10 ReplyCommentStyle mb-2">
+                                                                            <h5 class="text-primary m-0"> @cm2.CommentPost.FullName </h5>
+                                                                            <p style="font-size: 12px !important; color: #E39 !important;">
+                                                                                @{
+                                                                                    var date2 = (DateTime.Now - cm2.CreatedDate);
+                                                                                    if (date2.Days == 0)
+                                                                                    {
+                                                                                        if (date2.Hours == 0)
+                                                                                        {
+                                                                                            if (date2.Minutes == 0)
+                                                                                            {
+                                                                                                @(date2.Seconds) @(" seconds before")
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                @(date2.Minutes) @(" minutes before")
+                                                                                            }
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            @(date2.Hours) @(" hours before")
+                                                                                        }
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        @(date2.Days) @(" days before")
+                                                                                    }
+                                                                                }
+                                                                            </p>
+                                                                            <p style="font-weight: 600 !important; color: darkslateblue !important;">
+                                                                                @cm2.Content
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        }
+                                                    </div>
+
+                                                    
+                                                    <form id="add-comment" class="add-comment my-5 replyComment" asp-controller="Blog" asp-action="PostComment" method="post">
+                                                        <fieldset>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <input asp-for="@Model.CommentPost.FullName" placeholder="Name" class="form-control form-control-sm form-control-alternative">
+                                                                        <div asp-validation-summary="All"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <input asp-for="@Model.CommentPost.Email" placeholder="Email" class="form-control form-control-sm form-control-alternative">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="">
+                                                                <div class="form-group">
+                                                                    <textarea asp-for="@Model.CommentPost.Content" class="form-control form-control-sm form-control-alternative" placeholder="Comment" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </fieldset>
+
+                                                        <input hidden asp-for="@Model.CommentPost.CommentId" value="@cm.Id" />
+                                                        <input hidden asp-for="@Model.CommentPost.BlogId" value="@Model.SingleBlog1.Id" />
+                                                        <div class="d-flex justify-content-end">
+                                                            <button class="mt-4 btn btn-primary">Reply to @cm.CommentPost.FullName</button>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        }
+
+
+
+                                    }
+                                }
+
+                            </section>
+                            <div class="clearfix"></div>
+                            <!-- Add Comment -->
+                            <div id="add-review" class="add-review-box AddBlogComment mt-4">
+                                <!-- Add Review -->
+                                <h3 class="listing-desc-headline mb-4">Add a comment</h3>
+                                <!-- Review Comment -->
+
+
+
+                                <form id="add-comment" class="add-comment" asp-controller="Blog" asp-action="PostComment" method="post">
+                                    <fieldset>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input asp-for="@Model.CommentPost.FullName" placeholder="Name" class="form-control form-control-alternative">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <input asp-for="@Model.CommentPost.Email" placeholder="Email" class="form-control form-control-alternative">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input asp-for="@Model.CommentPost.Subject" placeholder="Subject" class="form-control form-control-alternative">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="">
+                                            <div class="form-group">
+                                                <textarea class="form-control form-control-alternative" placeholder="Comment" id="exampleFormControlTextarea1" rows="3" asp-for="@Model.CommentPost.Content"></textarea>
+                                            </div>
+                                        </div>
+                                        <input hidden asp-for="@Model.CommentPost.BlogId" value="@Model.SingleBlog1.Id" />
+                                    </fieldset>
+                                    <button class="mt-4 btn btn-primary" type="submit">Submit Comment</button>
+                                    <div class="clearfix"></div>
+                                </form>
+
+
+                            </div>
+                            <!-- Add Review Box / End -->
+                        </div>
+                        <!-- Content / End -->
+                        <!-- Widgets -->
+                        <div class="col-lg-3 col-md-4">
+                            <div class="sidebar right">
+                                <!-- Widget -->
+                                <div class="widget">
+                                    <h3 class="margin-top-0 margin-bottom-25">Search Blog</h3>
+                                    <div class="form-group">
+                                        <div class="input-group mb-4">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                            </div>
+                                            <input class="form-control" placeholder="Search" type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Widget / End -->
+                                <!-- Widget -->
+                                <div class="widget mb-4">
+                                    <h3>Popular Posts</h3>
+                                    <ul class="widget-tabs">
+                                        @{
+                                            
+                                            foreach (var item in ViewBag.LastestBlogs)
+                                            {
+                                                <li>
+                                                    <div class="widget-content">
+                                                        <div class="widget-thumb">
+                                                            <a asp-controller="Blog" asp-action="SingleBlog" asp-route-Id="@item.Id"><img src="~/assets/images/@item.Image" alt="image"></a>
+                                                        </div>
+                                                        <div class="widget-text">
+                                                            <h5><a href="#">@item.Title </a></h5>
+                                                            <span>@item.CreatedDate.ToString("MMMM d, yyyy")</span>
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                                <!-- Widget / End-->
+                                <!-- Widget -->
+                                <div class="widget margin-top-40">
+                                    <h3 class="margin-bottom-25">Follow Us</h3>
+                                    <div class=" btn-wrapper">
+                                        <a target="_blank" href="https://twitter.com/" class="btn btn-neutral btn-icon-only btn-twitter btn-round btn-lg" data-toggle="tooltip" data-original-title="Follow us">
+                                            <i class="fa fa-twitter"></i>
+                                        </a>
+                                        <a target="_blank" href="https://www.facebook.com/" class="btn btn-neutral btn-icon-only btn-facebook btn-round btn-lg" data-toggle="tooltip" data-original-title="Like us">
+                                            <i class="fa fa-facebook-square"></i>
+                                        </a>
+                                        <a target="_blank" href="https://dribbble.com/" class="btn btn-neutral btn-icon-only btn-dribbble btn-lg btn-round" data-toggle="tooltip" data-original-title="Follow us">
+                                            <i class="fa fa-dribbble"></i>
+                                        </a>
+                                        <a target="_blank" href="https://github.com/" class="btn btn-neutral btn-icon-only btn-github btn-round btn-lg" data-toggle="tooltip" data-original-title="Star on Github">
+                                            <i class="fa fa-github"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- Widget / End-->
+                                <div class="clearfix"></div>
+                                <div class="margin-bottom-40"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Sidebar / End -->
+                </div>
+            </div>
+        </div>
+
+    }
+
+

@@ -1,0 +1,323 @@
+﻿@model VmRestourant
+
+@{
+    ViewData["Title"] = "SingleRestourant";
+}
+
+<div id="titlebar" class="gradient">
+    <div class="title-bar-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Dingloy Place</h2>
+                    <span>Explore New Places</span>
+                    <!-- Breadcrumbs -->
+                    <nav id="breadcrumbs">
+                        <ul>
+                            <li><a>Home</a></li>
+                            <li>Listings</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="title-overlay"></div>
+</div>
+<!-- Content -->
+<div class="container">
+    <div class="content">
+        <div class="row sticky-wrapper">
+            <div class="col-lg-8 col-md-8">
+                <div class="">
+                    @{
+                        <div class="detail-tile mb-4">
+                            <h3>
+                                @Model.SingleRestourant.Name
+                                <span class="badge badge-pill badge-success text-uppercase">
+                                    @{
+                                        var time = Model.SingleRestourant.OpeningTime - Model.SingleRestourant.OpeningTime.Date;
+                                        var time2 = Model.SingleRestourant.ClosingTime - Model.SingleRestourant.ClosingTime.Date;
+                                        var currentTime = DateTime.Now - DateTime.Now.Date;
+
+                                        if (currentTime > time && currentTime < time2)
+                                        {
+                                            @("Open")
+                                        }
+                                        else
+                                        {
+                                            @("Closed")
+                                        }
+
+                                    }
+                                </span>
+                            </h3>
+                            <p>@Model.SingleRestourant.Address</p>
+                            <div class="listing-item-image mb-3">
+                                <img class="shadow" style="border-radius: 15px !important" src="~/assets/images/@Model.SingleRestourant.Logo" alt="">
+                            </div>
+                            <div>
+
+                                @{
+                                    foreach (var tag in Model.SingleRestourant.RestourantTagToRestourants)
+                                    {
+                                        <span class="badge badge-pill badge-info text-uppercase mr-2">@tag.RestourantTag.Name</span>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    }
+
+                    <div class="nav-wrapper">
+                        <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link mb-sm-3 mb-md-0 active show" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fa fa-info-circle mr-2"></i>About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="fa fa-map-marker mr-2"></i>Location</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="fa fa-money mr-2"></i>Pricing</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-4-tab" data-toggle="tab" href="#tabs-icons-text-4" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="fa fa-money mr-2"></i>Reviews</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade active show" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
+                                    <p class="description">
+                                        @Model.SingleRestourant.Text
+                                    </p>
+                                    <h4 class="mb-4">
+                                        Contact Info
+                                    </h4>
+                                    <div class="row mb-5">
+                                        <div class="col-lg-4">
+                                            <div class="detail-list mb-2">
+                                                <div class="detail-list-label mb-1">
+                                                    <i aria-hidden="true" class="fa fa-phone mr-2"></i>
+                                                    <small class="text-uppercase font-weight-bold">Reception.</small>
+                                                </div>
+                                                <p class="m-0 text-small">@Model.SingleRestourant.ReceptionPhone</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="detail-list mb-2">
+                                                <div class="detail-list-label mb-1">
+                                                    <i aria-hidden="true" class="fa fa-phone mr-2"></i>
+                                                    <small class="text-uppercase font-weight-bold">For Complaints.</small>
+                                                </div>
+                                                <p class="m-0 text-small">@Model.SingleRestourant.CompaintPhone</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="detail-list mb-2">
+                                                <div class="detail-list-label mb-1">
+                                                    <i aria-hidden="true" class="fa fa-phone mr-2"></i><small class="text-uppercase font-weight-bold">Support.</small>
+                                                </div>
+                                                <p class="m-0 text-small">@Model.SingleRestourant.SupportPhone</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4 class="mb-4">Features</h4>
+                                    @{
+                                        foreach (var f in Model.SingleRestourant.RestourantFeatureToRestourants)
+                                        {
+                                            <span class="badge badge-pill badge-primary text-uppercase mr-2 mb-2">@f.RestourantFeature.Name</span>
+                                        }
+                                    }
+                                </div>
+                                <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
+                                    <p class="description">@Model.SingleRestourant.LocationDesc</p>
+                                    <div>
+                                        <iframe src="@Model.SingleRestourant.LocationOnMap" width="550" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
+                                    <div class="pricing-list-container">
+                                        <ul>
+                                            @{
+                                                foreach (var m in Model.SingleRestourant.MenuToRestourants)
+                                                {
+                                                    <li>
+                                                        <h5>@m.Menu.MenuName</h5>
+                                                        <p>@m.Ingrediend</p>
+                                                        <span>$@m.Price</span>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tabs-icons-text-4" role="tabpanel" aria-labelledby="tabs-icons-text-4-tab">
+                                    @{
+                                        foreach (var c in Model.SingleRestourant.RestourantComments)
+                                        {
+                                            <div class="row mb-5 list-img-wrap">
+                                                <div class="col-md-2 list-img">
+                                                    <img class="img-fluid rounded-circle" src="~/assets/images/default-avatar.png" alt="image">
+                                                </div>
+                                                <div class="col-md-10 ReplyCommentStyle">
+                                                    <h5 class="text-primary">@c.CommentPost.FullName</h5>
+                                                    <p style="font-size: 12px !important; color: #E39 !important;">
+                                                        @{
+                                                            var date = (DateTime.Now - c.CreatedDate);
+                                                            if (date.Days == 0)
+                                                            {
+                                                                if (date.Hours == 0)
+                                                                {
+                                                                    if (date.Minutes == 0)
+                                                                    {
+                                                                        @(date.Seconds) @(" seconds before")
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @(date.Minutes) @(" minutes before")
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    @(date.Hours) @(" hours before")
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                @(date.Days) @(" days before")
+                                                            }
+                                                        }
+                                                    </p>
+                                                    <p style="font-weight: 600 !important; color: darkslateblue !important;">
+                                                        @c.Content
+                                                    </p>
+                                                    <button class="btn btn-sm btn-primary" type="button">Helpful?</button>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+
+
+                                    <div id="add-review" class="add-review-box mt-5">
+                                        <!-- Add Review -->
+                                        <h3 class="listing-desc-headline mb-4 pt-3">Add a comment</h3>
+                                        <!-- Review Comment -->
+
+
+
+                                        <form id="add-comment" class="add-comment" asp-controller="Restourant" asp-action="PostComment" method="post">
+                                            <fieldset>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <input asp-for="@Model.CommentPost.FullName" placeholder="Name" class="form-control form-control-alternative">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <input asp-for="@Model.CommentPost.Email" placeholder="Email" class="form-control form-control-alternative">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <input asp-for="@Model.CommentPost.Subject" placeholder="Subject" class="form-control form-control-alternative">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control form-control-alternative" placeholder="Comment" id="exampleFormControlTextarea1" rows="3" asp-for="@Model.CommentPost.Content"></textarea>
+                                                    </div>
+                                                </div>
+                                                <input hidden asp-for="@Model.CommentPost.RestourantdId" value="@Model.SingleRestourant.Id" />
+                                            </fieldset>
+                                            <button class="mt-4 btn btn-primary" type="submit">Submit Comment</button>
+                                            <div class="clearfix"></div>
+                                        </form>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="sticky">
+                    <!-- Book Now -->
+                    <div class="boxed-widget booking-widget">
+                        <div>
+                            <div class="form-group focused">
+                                <form asp-controller="Restourant" asp-action="Reservation" method="post">
+
+                                    @{
+                                        if (TempData["ReservError"] != null)
+                                        {
+                                            <div class="alert-danger form-control mb-2">@TempData["ReservError"]</div>
+                                        }
+                                        TempData["ReservError"] = null;
+
+                                        if (TempData["ReservSuccess"] != null)
+                                        {
+                                            <div class="alert-success form-control mb-2">@TempData["ReservSuccess"]</div>
+                                        }
+                                        TempData["ReservSuccess"] = null;
+                                    }
+
+                                    <div class="input-group">
+                                        <input class=" form-control" placeholder="Start date" type="date" asp-for="@Model.Reservation.ReservationTime">
+                                    </div>
+
+                                    <div class="input-group my-2">
+                                        <input style="border-left: 1px solid rgba(50, 151, 211, 0.25) !important; padding-left: 12px !important; border-right: 1px solid rgba(50, 151, 211, 0.25) !important; padding-right: 12px !important; " class="form-control" placeholder="Name" asp-for="@Model.Reservation.Name">
+                                        <input style="border-left: 1px solid rgba(50, 151, 211, 0.25) !important; padding-left: 12px !important; border-right: 1px solid rgba(50, 151, 211, 0.25) !important; padding-right: 12px !important; " class="form-control" placeholder="Surname" asp-for="@Model.Reservation.Surname">
+                                    </div>
+
+                                    <input class="form-control" placeholder="Identity" asp-for="@Model.Reservation.IdentityNo">
+                                    <input class="form-control my-2" placeholder="Phone" asp-for="@Model.Reservation.Phone">
+
+                                    <div class="form-group">
+                                        <select class="form-control form-control-alternative custom-select" asp-for="@Model.Reservation.GuestId">
+                                            <option selected>Select Guest...</option>
+                                            @{
+                                                foreach (var g in ViewBag.Guests)
+                                                {
+                                                    <option value="@g.Id">@g.GuestCount</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <input asp-for="@Model.Reservation.RestourantId" value="@Model.SingleRestourant.Id" hidden />
+                                    <button type="submit" class="btn btn-1 btn-primary d-block">Book Now</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="boxed-widget bg-secondary mt-4 text-center p-4">
+                        <h4 class="mb-4">Restourant Manager</h4>
+                        <div class="mb-3">
+                            <div class="mb-2">
+                                <img class="img-fluid rounded-circle shadow-lg" width="80" height="80" src="~/assets/images/@Model.SingleRestourant.RestourantMenager.Image" alt="image">
+                            </div>
+                            <div class="">
+                                <h5 class="text-primary">@Model.SingleRestourant.RestourantMenager.Name @Model.SingleRestourant.RestourantMenager.SurName</h5>
+                            </div>
+                        </div>
+                        <ul class="listing-details-sidebar">
+                            <li><i class="fa fa-phone"></i> @Model.SingleRestourant.RestourantMenager.Phone</li>
+                            <li><i class="fa fa-external-link"></i> @Model.SingleRestourant.RestourantMenager.WebSite</li>
+                            <li><i class="fa fa-envelope-o"></i>@Model.SingleRestourant.RestourantMenager.Email</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

@@ -11,7 +11,6 @@ namespace DirectList_Final.ViewModel
         public List<Blog> Blog { get; set; }
         public Blog SingleBlog1 { get; set; }
         public Banner Banner { get; set; }
-
         public CommentPost CommentPost { get; set; }
     }
 }

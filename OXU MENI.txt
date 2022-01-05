@@ -1,0 +1,15 @@
+SUPER ADMIN
+Orkhan_Amir - username
+Ar123456@ - password
+
+Moderator
+Rasul_Haci - username
+Ra12345@ - password
+
+User
+Abu_Ashraf - username
+Aw12345@ - password
+
+User
+Elvin_017 - username
+El12345@ - password

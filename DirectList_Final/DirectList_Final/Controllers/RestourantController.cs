@@ -56,14 +56,13 @@ namespace DirectList_Final.Controllers
                 if (model2!=null)
                 {
                     model2.Setting = _context.Settings.FirstOrDefault();
-                    model2.Banner = _context.Banners.FirstOrDefault(b => b.Page == "SingleRestourants");
+                    model2.Banner = _context.Banners.FirstOrDefault(b => b.Page == "Restourant");
                     model2.SiteSocial = _context.SiteSocials.ToList();
                     model2.SingleRestourant = _context.Restourants.Include(mr => mr.MenuToRestourants)
                                                              .ThenInclude(m => m.Menu)
                                                              .Include(r => r.RestourantTagToRestourants).ThenInclude(rt => rt.RestourantTag)
                                                              .Include(rf => rf.RestourantFeatureToRestourants).ThenInclude(f => f.RestourantFeature)
                                                              .Include(rc => rc.RestourantComments).ThenInclude(cp => cp.CommentPost)
-                                                             .Include(ao => ao.RestourantMenager)
                                                              .Include(r => r.Reservations).ThenInclude(g => g.Guest).FirstOrDefault(r => r.Id == Id);
                     ViewBag.Guests = _context.Guests.ToList();
 
@@ -143,7 +142,7 @@ namespace DirectList_Final.Controllers
                 }
             }
 
-            CookieOptions options = new CookieOptions()
+            CookieOptions options = new()
             {
                 Expires = DateTime.Now.AddMonths(1)
             };

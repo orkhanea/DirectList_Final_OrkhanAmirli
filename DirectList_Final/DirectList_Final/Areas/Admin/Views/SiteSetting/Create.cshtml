@@ -1,0 +1,56 @@
+﻿@model Setting
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row my-5">
+        <div class="col-lg-12 my-5">
+            <form asp-area="Admin" asp-controller="SiteSetting" asp-action="Create" method="post" enctype="multipart/form-data">
+                @{ 
+                    if (TempData["SettingError"] != null)
+                    {
+                        <p style="font-size: 20px !important;" class="alert alert-danger">@TempData["SettingError"]</p>
+                        TempData["SettingError"] = null;
+                    }
+                }
+
+                <div class="mb-3">
+                    <label asp-for="@Model.Phone" class="form-label" style="font-weight: bold; font-size: 20px; color: #223e9c;">Phone</label>
+                    <input class="form-control" asp-for="@Model.Phone" rows="7">
+                    <span class="text-danger" asp-validation-for="@Model.Phone"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="@Model.Email" class="form-label" style="font-weight: bold; font-size: 20px; color: #223e9c;">Email</label>
+                    <input class="form-control" asp-for="@Model.Email">
+                    <span class="text-danger" asp-validation-for="@Model.Email"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="@Model.Address" class="form-label" style="font-weight: bold; font-size: 20px; color: #223e9c;">Address</label>
+                    <input class="form-control" asp-for="@Model.Address">
+                    <span class="text-danger" asp-validation-for="@Model.Address"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="@Model.FooterText" class="form-label" style="font-weight: bold; font-size: 20px; color: #223e9c;">Info</label>
+                    <textarea class="form-control" asp-for="@Model.FooterText" rows="7"></textarea>
+                    <span class="text-danger" asp-validation-for="@Model.FooterText"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="@Model.LogoFile" class="form-label">Choose Logo</label>
+                    <input class="form-control" asp-for="@Model.LogoFile">
+                    <span class="text-danger" asp-validation-for="@Model.LogoFile"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="@Model.BgImageFile" class="form-label">Choose Home Page Banner Image</label>
+                    <input class="form-control" asp-for="@Model.BgImageFile">
+                    <span class="text-danger" asp-validation-for="@Model.BgImageFile"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+

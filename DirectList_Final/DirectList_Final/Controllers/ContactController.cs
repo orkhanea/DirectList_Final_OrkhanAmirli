@@ -36,8 +36,14 @@ namespace DirectList_Final.Controllers
                 Message.CreatedDate = DateTime.Now;
                 _context.Messages.Add(Message);
                 _context.SaveChanges();
+
+                TempData["MessageSuccess"] = "Your message has been sent successfully";
             }
-           
+            else
+            {
+                TempData["MessageError"] = "Please fill out all of the required fields correctly";
+
+            }
 
             return RedirectToAction("Index");
         }

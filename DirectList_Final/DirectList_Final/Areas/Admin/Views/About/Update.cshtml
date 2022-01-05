@@ -1,0 +1,40 @@
+﻿@model AboutUs
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+
+<form class="my-5 p-5" asp-area="Admin" asp-controller="About" asp-action="Update" method="post" enctype="multipart/form-data">
+    @{
+        if (TempData["AboutError2"] != null)
+        {
+            <p style="font-size: 20px !important;" class="alert alert-danger">@TempData["AboutError2"]</p>
+
+            TempData["AboutError2"] = null;
+        }
+    }
+    <div class="mb-3">
+        <label asp-for="@Model.Info" class="form-label">Info</label>
+        <textarea class="form-control" asp-for="@Model.Info"></textarea>
+        <span class="text-danger" asp-validation-for="@Model.Info"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="@Model.ImageText" class="form-label">Our Goal</label>
+        <textarea class="form-control" asp-for="@Model.ImageText"></textarea>
+        <span class="text-danger" asp-validation-for="@Model.ImageText"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="@Model.Icon" class="form-label">Icon</label>
+        <input class="form-control" asp-for="@Model.Icon">
+        <span class="text-danger" asp-validation-for="@Model.Icon"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="@Model.ImageFile" class="form-label">Image</label>
+        <input class="form-control" asp-for="@Model.ImageFile">
+        <span class="text-danger" asp-validation-for="@Model.ImageFile"></span>
+    </div>
+
+    <input type="hidden" asp-for="@Model.Id" />
+    <input type="hidden" asp-for="@Model.Image" />
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>

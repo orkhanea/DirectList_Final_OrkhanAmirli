@@ -13,7 +13,7 @@ namespace DirectList_Final.Models
         [Key]
         public int Id { get; set; }
 
-        [MaxLength(20)]
+        [MaxLength(20),Required]
         public string Name { get; set; }
 
         public List<RestourantTagToRestourant> RestourantTagToRestourants { get; set; }

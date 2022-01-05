@@ -26,6 +26,8 @@ namespace DirectList_Final.Models
 
         public List<Blog> Blogs { get; set; }
 
+        [NotMapped]
+        public string RoleId { get; set; }
 
 
 

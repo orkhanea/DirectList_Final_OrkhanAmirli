@@ -1,0 +1,139 @@
+﻿@model Restourant
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+
+<form class="pl-5 pb-5 pr-5 pt-0" asp-area="Admin" asp-controller="Restourant" asp-action="Update" method="post" enctype="multipart/form-data">
+    <div class="p-5 row">
+        <p class="col-lg-12 mb-5 p-0 text-center text-facebook" style=" font-size: 24px !important; font-weight: 600 !important;">Restourant Informations</p>
+        @{
+            if (TempData["RestourantError3"] != null)
+            {
+                <p style="font-size: 20px !important;" class="alert alert-danger col-lg-12">@TempData["RestourantError3"]</p>
+
+                TempData["RestourantError3"] = null;
+            }
+        }
+        <div class="mb-3 col-lg-4">
+            <label asp-for="@Model.Name" class="form-label">Name</label>
+            <input class="form-control" asp-for="@Model.Name">
+            <span class="text-danger" asp-validation-for="@Model.Name"></span>
+        </div>
+        <div class="mb-3 col-lg-4">
+            <label asp-for="@Model.Address" class="form-label">Address</label>
+            <input class="form-control" asp-for="@Model.Address">
+            <span class="text-danger" asp-validation-for="@Model.Address"></span>
+        </div>
+        <div class="mb-3 col-lg-4">
+            <label asp-for="@Model.SupportPhone" class="form-label">Support Phone</label>
+            <input class="form-control" asp-for="@Model.SupportPhone">
+            <span class="text-danger" asp-validation-for="@Model.SupportPhone"></span>
+        </div>
+        <div class="mb-3 col-lg-4">
+            <label asp-for="@Model.CompaintPhone" class="form-label">Compaint Phone</label>
+            <input class="form-control" asp-for="@Model.CompaintPhone">
+            <span class="text-danger" asp-validation-for="@Model.CompaintPhone"></span>
+        </div>
+        <div class="mb-3 col-lg-4">
+            <label asp-for="@Model.ReceptionPhone" class="form-label">Reception Phone</label>
+            <input class="form-control" asp-for="@Model.ReceptionPhone">
+            <span class="text-danger" asp-validation-for="@Model.ReceptionPhone"></span>
+        </div>
+        <div class="mb-3 col-lg-4">
+            <label asp-for="@Model.LocationDesc" class="form-label">Location Description</label>
+            <input class="form-control" asp-for="@Model.LocationDesc">
+            <span class="text-danger" asp-validation-for="@Model.LocationDesc"></span>
+        </div>
+        <div class="mb-3 col-lg-4">
+            <label asp-for="@Model.LocationOnMap" class="form-label">Location on Map</label>
+            <input class="form-control" asp-for="@Model.LocationOnMap">
+            <span class="text-danger" asp-validation-for="@Model.LocationOnMap"></span>
+        </div>
+        <div class="mb-3 col-lg-4">
+            <label asp-for="@Model.OpeningTime" class="form-label">Opening Time</label>
+            <input type="time" class="form-control" asp-for="@Model.OpeningTime">
+            <span class="text-danger" asp-validation-for="@Model.OpeningTime"></span>
+        </div>
+        <div class="mb-3 col-lg-4">
+            <label asp-for="@Model.ClosingTime" class="form-label">Closing Time</label>
+            <input type="time" class="form-control" asp-for="@Model.ClosingTime">
+            <span class="text-danger" asp-validation-for="@Model.ClosingTime"></span>
+        </div>
+        <div class="col-lg-10 mb-3 offset-1">
+            <label asp-for="@Model.Text" class="form-label">Content</label>
+            <textarea class="form-control" asp-for="@Model.Text"></textarea>
+            <span class="text-danger" asp-validation-for="@Model.Text"></span>
+        </div>
+
+        <div class="mb-3 col-lg-12">
+            <label asp-for="@Model.RestourantFeatureToRestourantId" class="form-label">Restourant Features</label>
+            <select class="form-control js-example-basic-multiple" multiple="multiple" asp-for="@Model.RestourantFeatureToRestourantId">
+                @{
+                    foreach (var rf in ViewBag.Features)
+                    {
+                        <option value="@rf.Id">@rf.Name</option>
+                    }
+                }
+            </select>
+            <span class="text-danger" asp-validation-for="@Model.RestourantFeatureToRestourantId"></span>
+        </div>
+        <div class="mb-3 col-lg-12">
+            <label asp-for="@Model.RestourantTagToRestourantId" class="form-label">Restourant Tags</label>
+            <select class="form-control js-example-basic-multiple" multiple="multiple" asp-for="@Model.RestourantTagToRestourantId">
+                @{
+                    foreach (var rt in ViewBag.Tags)
+                    {
+                        <option value="@rt.Id">@rt.Name</option>
+                    }
+                }
+            </select>
+            <span class="text-danger" asp-validation-for="@Model.RestourantTagToRestourantId"></span>
+        </div>
+        <div class="mb-3 col-lg-12">
+            <label asp-for="@Model.LogoFile" class="form-label">Choose Restourant Image</label>
+            <input class="form-control" asp-for="@Model.LogoFile">
+            <span class="text-danger" asp-validation-for="@Model.LogoFile"></span>
+        </div>
+    </div>
+    <div class="border border-primary my-5 p-5 row">
+        <p class="col-lg-12 mb-5 p-0 text-center text-facebook" style=" font-size: 24px !important; font-weight: 600 !important;">Restourant Manager Informations</p>
+        <div class="mb-3 col-lg-6">
+            <label asp-for="@Model.ManagerName" class="form-label">Manager Name</label>
+            <input class="form-control" asp-for="@Model.ManagerName">
+            <span class="text-danger" asp-validation-for="@Model.ManagerName"></span>
+        </div>
+        <div class="mb-3 col-lg-6">
+            <label asp-for="@Model.ManagerSurName" class="form-label">Manager Surname</label>
+            <input class="form-control" asp-for="@Model.ManagerSurName">
+            <span class="text-danger" asp-validation-for="@Model.ManagerSurName"></span>
+        </div>
+        <div class="mb-3 col-lg-4">
+            <label asp-for="@Model.ManagerEmail" class="form-label">Manager Email</label>
+            <input class="form-control" asp-for="@Model.ManagerEmail">
+            <span class="text-danger" asp-validation-for="@Model.ManagerEmail"></span>
+        </div>
+        <div class="mb-3 col-lg-4">
+            <label asp-for="@Model.ManagerPhone" class="form-label">Manager Phone</label>
+            <input class="form-control" asp-for="@Model.ManagerPhone">
+            <span class="text-danger" asp-validation-for="@Model.ManagerPhone"></span>
+        </div>
+        <div class="mb-3 col-lg-4">
+            <label asp-for="@Model.ManagerWebSite" class="form-label">Manager Website</label>
+            <input class="form-control" asp-for="@Model.ManagerWebSite">
+            <span class="text-danger" asp-validation-for="@Model.ManagerWebSite"></span>
+        </div>
+        <div class="mb-3 col-lg-12">
+            <label asp-for="@Model.ManagerImageFile" class="form-label">Choose Manager Image</label>
+            <input class="form-control" asp-for="@Model.ManagerImageFile">
+            <span class="text-danger" asp-validation-for="@Model.ManagerImageFile"></span>
+        </div>
+
+    </div>
+
+    <input type="hidden" asp-for="@Model.Id" />
+    <input type="hidden" asp-for="@Model.Logo" />
+    <input type="hidden" asp-for="@Model.ManagerImage" />
+    <button type="submit" class="btn btn-success">Update</button>
+</form>
+

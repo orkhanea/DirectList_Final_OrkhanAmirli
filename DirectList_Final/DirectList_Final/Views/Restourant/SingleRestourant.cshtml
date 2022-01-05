@@ -4,18 +4,18 @@
     ViewData["Title"] = "SingleRestourant";
 }
 
-<div id="titlebar" class="gradient">
+<div id="titlebar" class="gradient" style="background: url(/assets/images/@Model.Banner.Image)">
     <div class="title-bar-inner">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Dingloy Place</h2>
-                    <span>Explore New Places</span>
+                    <h2>@Model.SingleRestourant.Name</h2>
+                    <span>@Model.Banner.Title</span>
                     <!-- Breadcrumbs -->
                     <nav id="breadcrumbs">
                         <ul>
-                            <li><a>Home</a></li>
-                            <li>Listings</li>
+                            <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li>@Model.Banner.SubTitle</li>
                         </ul>
                     </nav>
                 </div>
@@ -53,8 +53,8 @@
                                 </span>
                             </h3>
                             <p>@Model.SingleRestourant.Address</p>
-                            <div class="listing-item-image mb-3">
-                                <img class="shadow" style="border-radius: 15px !important" src="~/assets/images/@Model.SingleRestourant.Logo" alt="">
+                            <div class="h-100 listing-item-image mb-3 w-100">
+                                <img class="" style="border-radius: 15px !important; width: 100% !important; object-fit: fill !important; height: 400px !important;" src="~/assets/images/@Model.SingleRestourant.Logo" alt="">
                             </div>
                             <div>
 
@@ -116,7 +116,7 @@
                                         <div class="col-lg-4">
                                             <div class="detail-list mb-2">
                                                 <div class="detail-list-label mb-1">
-                                                    <i aria-hidden="true" class="fa fa-phone mr-2"></i><small class="text-uppercase font-weight-bold">Support.</small>
+                                                    <i aria-hidden="true" class="fa fa-phone mr-2"></i><small class="text-uppercase font-weight-bold">Support</small>
                                                 </div>
                                                 <p class="m-0 text-small">@Model.SingleRestourant.SupportPhone</p>
                                             </div>
@@ -301,16 +301,16 @@
                         <h4 class="mb-4">Restourant Manager</h4>
                         <div class="mb-3">
                             <div class="mb-2">
-                                <img class="img-fluid rounded-circle shadow-lg" width="80" height="80" src="~/assets/images/@Model.SingleRestourant.RestourantMenager.Image" alt="image">
+                                <img class="img-fluid rounded-circle shadow-lg" width="80" height="80" src="~/assets/images/@Model.SingleRestourant.ManagerImage" alt="image">
                             </div>
                             <div class="">
-                                <h5 class="text-primary">@Model.SingleRestourant.RestourantMenager.Name @Model.SingleRestourant.RestourantMenager.SurName</h5>
+                                <h5 class="text-primary">@Model.SingleRestourant.ManagerName @Model.SingleRestourant.ManagerSurName</h5>
                             </div>
                         </div>
                         <ul class="listing-details-sidebar">
-                            <li><i class="fa fa-phone"></i> @Model.SingleRestourant.RestourantMenager.Phone</li>
-                            <li><i class="fa fa-external-link"></i> @Model.SingleRestourant.RestourantMenager.WebSite</li>
-                            <li><i class="fa fa-envelope-o"></i>@Model.SingleRestourant.RestourantMenager.Email</li>
+                            <li><i class="fa fa-phone"></i> @Model.SingleRestourant.ManagerPhone</li>
+                            <li><i class="fa fa-external-link"></i> @Model.SingleRestourant.ManagerWebSite</li>
+                            <li><i class="fa fa-envelope-o"></i>@Model.SingleRestourant.ManagerEmail</li>
                         </ul>
                     </div>
                 </div>

@@ -38,7 +38,7 @@
 
         <header class="header-global">
             <nav id="navbar-main" class="navbar navbar-main fixed-top navbar-expand-lg navbar-transparent navbar-light headroom">
-                <div class="container p-0">
+                <div class="container">
                     <div class="logo">
                         <a><img src="~/assets/images/@Model.Setting.Logo" class="img-fluid" alt=""></a>
                     </div>
@@ -81,14 +81,11 @@
                                     </li>
                                 </ul>
                             </nav>
-                            <div class="header-widget">
-                                <a class="btn btn-neutral btn-icon btn-radius" href="add-listing.html">Add Listing <i class="fa fa-plus"></i></a>
-                            </div>
                         </div>
                     </div>
-                    <div class="favourite">
-                        <a class="btn ml-5 position-relative" style="color: #fff !important;">Favourites
-                        <span style="right: -5px !important;" class="@(favourites==0?"d-none":"") position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    <div class="header-widget">
+                        <a asp-controller="Favourite" asp-action="Index" class="btn btn-neutral btn-icon btn-radius" style="color: #5e72e4 !important;">Favourites
+                        <span style="height: 20px !important; width: 20px !important; color: #fff !important;" class="@(favourites==0?"d-none":"") ml-1 badge rounded-circle bg-danger">
                             @{ 
                                 if (favourites!=0)
                                 {
@@ -106,7 +103,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-5 col-sm-6">
-                        <a asp-controller="Home" asp-action="Index"><img class="footer-logo img-fluid" src="~/assets/images/logo-white.png" alt="list-logo"></a>
+                        <a asp-controller="Home" asp-action="Index"><img class="footer-logo img-fluid" src="~/assets/images/@Model.Setting.Logo" alt="list-logo"></a>
                         <br><br>
                         <p class="text-white">@Model.Setting.FooterText</p>
                         <div class="text-widget text-white">

@@ -33,7 +33,6 @@ namespace DirectList_Final.Data
         public DbSet<RestourantComment> RestourantComments { get; set; }
         public DbSet<RestourantFeature> RestourantFeatures { get; set; }
         public DbSet<RestourantFeatureToRestourant> RestourantFeatureToRestourants { get; set; }
-        public DbSet<RestourantMenager> RestourantMenagers { get; set; }
         public DbSet<RestourantTag> RestourantTags { get; set; }
         public DbSet<RestourantTagToRestourant> RestourantTagToRestourants { get; set; }
         public DbSet<Setting> Settings { get; set; }

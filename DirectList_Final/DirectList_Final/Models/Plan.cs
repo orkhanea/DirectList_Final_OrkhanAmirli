@@ -13,13 +13,13 @@ namespace DirectList_Final.Models
         [Key]
         public int Id { get; set; }
 
-        [MaxLength(50)]
+        [MaxLength(50), Required]
         public string Title { get; set; }
 
-        [MaxLength(1000)]
+        [MaxLength(1000), Required]
         public string Text { get; set; }
 
-        [MaxLength(50)]
+        [MaxLength(50), Required]
         public string Icon { get; set; }
 
     }

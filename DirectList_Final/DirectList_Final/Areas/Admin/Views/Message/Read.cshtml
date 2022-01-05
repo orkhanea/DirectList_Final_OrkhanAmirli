@@ -1,0 +1,46 @@
+﻿@model Message
+
+@{
+    ViewData["Title"] = "Read";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="alert col-lg-10 my-5" style="background-color: #f5f5f58f !important; border-radius: 20px !important;">
+            <div class="align-items-center d-flex flex-lg-row justify-content-between"><h2 class="m-0"> @Model.FirstName @Model.LastName</h2>
+                <span style="font-size: 15px !important; color: #E39 !important;">
+                    @{
+                        var date = (DateTime.Now - Model.CreatedDate);
+                        if (date.Days == 0)
+                        {
+                            if (date.Hours == 0)
+                            {
+                                if (date.Minutes == 0)
+                                {
+                                    @(date.Seconds) @(" seconds before")
+                                }
+                                else
+                                {
+                                    @(date.Minutes) @(" minutes before")
+                                }
+                            }
+                            else
+                            {
+                                @(date.Hours) @(" hours before")
+                            }
+                        }
+                        else
+                        {
+                            @(date.Days) @(" days before")
+                        }
+                    }
+                </span>
+            </div>
+            <span class="text-facebook">@Model.Email</span>
+            <h6 class="mt-3 text-lg-center" style="font-size: 22px !important; color: darkblue !important;" > @Model.Subject </h6>
+            <p class="m-0 alert alert-link text-center" style="font-size: 18px !important;font-weight: 600 !important;font-style: italic !important;color: steelblue !important;"> @Model.Content</p>
+        </div>
+    </div>
+</div>
+

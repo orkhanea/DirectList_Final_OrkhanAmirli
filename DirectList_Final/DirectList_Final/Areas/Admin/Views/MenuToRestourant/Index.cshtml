@@ -1,0 +1,83 @@
+﻿@model VmMenu
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    @{
+        if (TempData["RMenuError"] != null)
+        {
+            <p style="font-size: 20px !important; margin-left: auto !important; margin-right: auto !important;" class="text-center mt-3 alert alert-danger">@TempData["RMenuError"]</p>
+
+            TempData["RMenuError"] = null;
+        }
+    }
+
+    @{
+        foreach (var r in Model.Restourants)
+        {
+            <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title text-center" style="font-size: 35px !important; font-weight: 600 !important; color: #3b579d !important; ">@r.Name</h4>
+                        <a class="btn btn-primary mb-3 px-5" asp-route-Id="@r.Id" asp-area="Admin" asp-controller="MenuToRestourant" asp-action="Create">Add Menu</a>
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center">
+                                <thead>
+                                    <tr>
+                                        <th class="tableTrCustom text-facebook" style="font-size: 20px !important; font-weight: 600 !important;">
+                                            #
+                                        </th>
+                                        <th class="tableTrCustom text-facebook" style="font-size: 20px !important; font-weight: 600 !important;">
+                                            Menu Name
+                                        </th>
+                                        <th class="tableTrCustom text-facebook" style="font-size: 20px !important; font-weight: 600 !important;">
+                                            Ingrediend
+                                        </th>
+                                        <th class="tableTrCustom text-facebook" style="font-size: 20px !important; font-weight: 600 !important;">
+                                            Price
+                                        </th>
+                                        <th class="tableTrCustom text-facebook" style="font-size: 20px !important; font-weight: 600 !important;">
+                                            Edit
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int counter = 0;
+                                        foreach (var m in r.MenuToRestourants)
+                                        {
+                                            counter++;
+                                            <tr>
+                                                <td style="font-size: 18px !important; font-weight: 500 !important;">
+                                                    @counter
+                                                </td>
+                                                <td style="font-size: 18px !important; font-weight: 500 !important;">
+                                                    @m.Menu.MenuName
+                                                </td>
+                                                <td style="font-size: 18px !important; font-weight: 500 !important;">
+                                                    @(m.Ingrediend.Length>50? m.Ingrediend.Substring(0,50)+"...": m.Ingrediend)
+                                                </td>
+                                                <td style="font-size: 18px !important; font-weight: 500 !important;">
+                                                    @m.Price
+                                                </td>
+                                                <td>
+                                                    <a class="mb-2 w-100 btn-sm btn btn-success" asp-route-id="@m.Id" asp-area="Admin" asp-controller="MenuToRestourant" asp-action="Update">Update</a>
+                                                    <br>
+                                                    <a class="w-100 btn-sm btn btn-danger" asp-route-id="@m.Id" asp-area="Admin" asp-controller="MenuToRestourant" asp-action="Delete" onclick="return confirm('Are you sure?')">Delete</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</div>
+

@@ -13,9 +13,13 @@ namespace DirectList_Final.Models
         [Key]
         public int Id { get; set; }
 
-        [MaxLength(50)]
+        [MaxLength(50), Required]
         public string Title { get; set; }
 
+        [MaxLength(100), Required]
+        public string BlogInfo { get; set; }
+
+        [Required]
         public string Text { get; set; }
 
         public DateTime CreatedDate { get; set; }

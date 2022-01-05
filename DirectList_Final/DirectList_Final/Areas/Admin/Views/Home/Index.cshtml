@@ -1,0 +1,55 @@
+﻿@model VmAdminHome
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+<div class="content-wrapper">
+    <div> <p class="text-center text-linkedin" style="font-size: 30px !important; font-weight: 600 !important;">Lastest Blogs</p> </div>
+    <div class="row my-5">
+        @{
+            foreach (var item in Model.Blogs)
+            {
+                <div class="col-4 grid-margin stretch-card">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" style=" height: 267px !important; object-fit: cover !important;" src="~/assets/images/@item.Image" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">@item.Title</h5>
+                            <p class="card-text">@item.BlogInfo</p>
+                            <a asp-area="Admin" asp-controller="Blog" asp-action="Detail" asp-route-Id="@item.Id" class="btn btn-primary">Go to blog</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+
+    <div> <p class="text-center text-linkedin" style="font-size: 30px !important; font-weight: 600 !important;">Recently Added Restaurants</p> </div>
+    <div class="row my-5">
+        @{
+            foreach (var item in Model.Restourants)
+            {
+                <div class="col-3 grid-margin stretch-card">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" style=" height: 267px !important; object-fit: cover !important;" src="~/assets/images/@item.Logo" alt="Card image cap">
+                        <div class="card-body pt-2">
+                            <div>
+                                <div>
+                                    @{ foreach (var tag in item.RestourantTagToRestourants)
+                                        {
+                                            <span class="badge badge-dark badge-pill bg-gradient-dark" style="font-size: 10px !important;">@tag.RestourantTag.Name</span>
+                                        }
+                                    }
+                                </div>
+                                <h5 class="card-title font-weight-medium text-center mt-2" style="font-size: 24px !important;">@item.Name</h5>
+                                <p class="card-text">@item.Address</p>
+                                <div><a asp-area="Admin" asp-controller="Restourant" asp-action="Detail" asp-route-Id="@item.Id" class="btn btn-outline-dark btn-sm">Go to restourant</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>

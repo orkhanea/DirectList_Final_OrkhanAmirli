@@ -25,6 +25,7 @@ namespace DirectList_Final.Models
         [MaxLength(100)]
         public string Subject { get; set; }
 
+        [Required]
         public string Content { get; set; }
 
         public DateTime CreatedDate { get; set; }

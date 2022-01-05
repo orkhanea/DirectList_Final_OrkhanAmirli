@@ -1,0 +1,49 @@
+﻿@model MenuToRestourant
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+
+<p class="text-center text-facebook m-0 mt-4" style="font-size: 24px !important; font-weight: 600 !important;">@Model.Restourant.Name</p>
+
+<form class="align-items-center d-flex flex-column mb-5 p-5" asp-area="Admin" asp-controller="MenuToRestourant" asp-action="Update" method="post">
+
+    <div class="border border-primary d-flex flex-column mb-5 p-5 w-50">
+        <label asp-for="MenuId" class="font-weight-bold text-facebook pl-1 form-label">Menu Name</label>
+        <select asp-for="MenuId" class="form-control form-control-sm form-select form-select-sm" aria-label=".form-select-sm example">
+            <option selected>Open this select menu</option>
+            @{
+                foreach (var m in ViewBag.MenuB)
+                {
+                    <option value="@m.Id">@m.MenuName</option>
+                }
+            }
+        </select>
+        <span style=" font-size: 13px !important; font-weight: 600 !important;" class="text-danger" asp-validation-for="MenuId"></span>
+
+        <div>
+            <div class="my-3">
+                <label asp-for="@Model.Ingrediend" class="font-weight-medium  form-label">Ingrediend</label>
+                <textarea class="form-control" asp-for="@Model.Ingrediend"></textarea>
+                <span style=" font-size: 13px !important; font-weight: 600 !important;" class="text-danger" asp-validation-for="@Model.Ingrediend"></span>
+            </div>
+
+            <div>
+                <label asp-for="@Model.Price" class="font-weight-medium  form-label">Price</label>
+                <input class="form-control" asp-for="@Model.Price">
+                <span style=" font-size: 13px !important; font-weight: 600 !important;" class="text-danger" asp-validation-for="@Model.Price"></span>
+            </div>
+
+        </div>
+
+    </div>
+    
+    <input type="hidden" asp-for="@Model.Id"/>
+    <input type="hidden" asp-for="MenuId"/>
+    <input type="hidden" asp-for="RestourantId"/>
+    
+
+    <button type="submit" class="btn btn-sm btn-success w-25">Update</button>
+</form>
+
+

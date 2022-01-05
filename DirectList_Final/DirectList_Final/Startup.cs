@@ -56,6 +56,15 @@ namespace DirectList_Final
 
             app.UseEndpoints(endpoints =>
             {
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapAreaControllerRoute(
+                      name: "areas",
+                      areaName: "Admin",
+                      pattern: "Admin/{controller=Account}/{action=Login}/{id?}"
+                    );
+                });
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

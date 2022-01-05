@@ -1,0 +1,40 @@
+﻿@model Banner
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+
+<form class="my-5 p-5" asp-area="Admin" asp-controller="Banner" asp-action="Create" method="post" enctype="multipart/form-data">
+    @{
+        if (TempData["BannerError"] != null)
+        {
+            <p style="font-size: 20px !important;" class="alert alert-danger">@TempData["BannerError"]</p>
+
+            TempData["BannerError"] = null;
+        }
+    }
+    <div class="mb-3">
+        <label asp-for="@Model.Title" class="form-label">Title</label>
+        <input class="form-control" asp-for="@Model.Title">
+        <span class="text-danger" asp-validation-for="@Model.Title"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="@Model.SubTitle" class="form-label">Subtitle</label>
+        <input class="form-control" asp-for="@Model.SubTitle">
+        <span class="text-danger" asp-validation-for="@Model.SubTitle"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="@Model.Page" class="form-label">Page</label>
+        <input class="form-control" asp-for="@Model.Page">
+        <span class="text-danger" asp-validation-for="@Model.Page"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="@Model.ImageFile" class="form-label">Image</label>
+        <input class="form-control" asp-for="@Model.ImageFile">
+        <span class="text-danger" asp-validation-for="@Model.ImageFile"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>
+

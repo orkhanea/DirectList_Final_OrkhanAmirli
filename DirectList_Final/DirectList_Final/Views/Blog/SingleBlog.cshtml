@@ -4,19 +4,18 @@
     ViewData["Title"] = "SingleBlog";
 }
 
-<div id="titlebar" class="gradient">
+<div id="titlebar" class="gradient" style="background: url(/assets/images/@Model.Banner.Image)">
     <div class="title-bar-inner">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>Blog Detail</h2>
-                    <span>Explore your search places</span>
+                    <h2>@Model.Banner.SubTitle</h2>
+                    <span>@Model.Banner.Title</span>
                     <!-- Breadcrumbs -->
                     <nav id="breadcrumbs">
                         <ul>
-                            <li><a>Home</a></li>
-                            <li>Blog</li>
-                            <li>Detail</li>
+                            <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                            <li>@Model.Banner.SubTitle</li>
                         </ul>
                     </nav>
                 </div>
@@ -47,9 +46,9 @@
                                         <li>@Model.SingleBlog1.CreatedDate.ToString("MMMM d, yyyy")</li>
                                         <li><a>@Model.SingleBlog1.Comments.Count Comments</a></li>
                                     </ul>
-                                    <p>
-                                        @Model.SingleBlog1.Text
-                                    </p>
+                                    <div>
+                                        @Html.Raw(Model.SingleBlog1.Text)
+                                    </div>
                                 </div>
                             </div>
                             <!-- Blog Post / End -->
@@ -64,10 +63,11 @@
                             </ul>
                             <!-- About Author -->
                             <div class="about-author BlogAuthorStyle">
-                                <img src="~/assets/images/thumb-4.jpg" alt="image" />
+                                <img src="~/assets/images/@(Model.SingleBlog1.CustomUser.Image==null?"default-avatar.png":Model.SingleBlog1.CustomUser.Image)" alt="image" />
                                 <div class="about-description" style="margin-left: 20px !important;">
                                     <h4>@Model.SingleBlog1.CustomUser.Name @Model.SingleBlog1.CustomUser.Surname</h4>
-                                    <p>@Model.SingleBlog1.CustomUser.PhoneNumber @* AuthorDetailTextHere*@</p>
+                                    <p>Phone - @Model.SingleBlog1.CustomUser.PhoneNumber</p>
+                                    <p>Email - @Model.SingleBlog1.CustomUser.Email</p>
                                 </div>
                             </div>
                             <div class="margin-top-50"></div>
@@ -259,12 +259,13 @@
                                 <div class="widget">
                                     <h3 class="margin-top-0 margin-bottom-25">Search Blog</h3>
                                     <div class="form-group">
-                                        <div class="input-group mb-4">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                        <form asp-controller="Blog" asp-action="Index" method="post" class="input-group mb-4">
+                                            <div class="input-group">
+                                                <input class="form-control" name="SearchData" placeholder="Search" type="text">
+                                                <button style="border-radius: 0 5px 5px 0 !important;" type="submit" class="btn btn-sm btn-success">Search</button>
+
                                             </div>
-                                            <input class="form-control" placeholder="Search" type="text">
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
                                 <!-- Widget / End -->

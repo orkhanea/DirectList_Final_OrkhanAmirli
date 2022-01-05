@@ -1,0 +1,28 @@
+﻿@model Process
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+
+<form class="my-5 p-5" asp-area="Admin" asp-controller="Process" asp-action="Update" method="post">
+
+    <div class="mb-3">
+        <label asp-for="@Model.Title" class="form-label">Title</label>
+        <input class="form-control" asp-for="@Model.Title">
+        <span class="text-danger" asp-validation-for="@Model.Title"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="@Model.Icon" class="form-label">Icon</label>
+        <input class="form-control" asp-for="@Model.Icon">
+        <span class="text-danger" asp-validation-for="@Model.Icon"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="@Model.Text" class="form-label">Text</label>
+        <textarea class="form-control" asp-for="@Model.Text"></textarea>
+        <span class="text-danger" asp-validation-for="@Model.Text"></span>
+    </div>
+
+    <input type="hidden" asp-for="@Model.Id" />
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+

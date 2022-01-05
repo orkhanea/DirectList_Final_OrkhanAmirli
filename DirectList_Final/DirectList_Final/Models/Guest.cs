@@ -13,7 +13,7 @@ namespace DirectList_Final.Models
         [Key]
         public int Id { get; set; }
 
-        [MaxLength(10)]
+        [MaxLength(10), Required]
         public string GuestCount { get; set; }
 
         public List<Reservation> Reservations { get; set; }

@@ -1,0 +1,79 @@
+﻿@model AboutUs
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-center" style="font-size: 35px !important; font-weight: 600 !important; color: #3b579d !important; ">Site Socials</h4>
+                @{
+                    if (Model == null)
+                    {
+                        <a class="btn btn-primary mb-3 px-5" asp-area="Admin" asp-controller="About" asp-action="Create">Create New</a>
+                    }
+                    else
+                    {
+
+                        if (TempData["AboutError3"] != null)
+                        {
+                            <p style="font-size: 20px !important;" class="alert alert-danger">@TempData["AboutError3"]</p>
+
+                            TempData["AboutError3"] = null;
+                        }
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center">
+                                <thead>
+                                    <tr>
+                                        <th class="tableTrCustom">
+                                            Image
+                                        </th>
+                                        <th class="tableTrCustom">
+                                            Info
+                                        </th>
+                                        <th class="tableTrCustom">
+                                            Our Goal
+                                        </th>
+                                        <th class="tableTrCustom">
+                                            Icon
+                                        </th>
+                                        <th class="tableTrCustom">
+                                            Edit
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        <tr>
+                                             <td class="py-1" style=" width: 200px !important; height: 100px !important;">
+                                                <img style="border-radius: unset !important; width: 100% !important; height: 100% !important; object-fit: contain !important;" src="~/assets/images/@Model.Image" alt="image" />
+                                            </td>
+                                            <td style="font-size: 18px !important; font-weight: 500 !important; width: 300px !important;">
+                                                @(Model.Info.Length>50? Model.Info.Substring(0,50)+"...": Model.Info)
+                                            </td>
+                                            <td style="width: 250px !important; font-size: 18px !important; font-weight: 500 !important;">
+                                                @(Model.ImageText.Length>50? Model.ImageText.Substring(0,50)+"...": Model.ImageText)
+                                            </td>
+                                            <td style="font-size: 18px !important; font-weight: 500 !important;">
+                                                @Model.Icon
+                                            </td>
+                                            <td>
+                                                <a class="mb-2 w-50 btn-sm btn btn-success" asp-route-id="@Model.Id" asp-area="Admin" asp-controller="About" asp-action="Update">Update</a>
+                                                <br>
+                                                <a class="w-50 btn-sm btn btn-danger" asp-route-id="@Model.Id" asp-area="Admin" asp-controller="About" asp-action="Delete" onclick="return confirm('Are you sure?')">Delete</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

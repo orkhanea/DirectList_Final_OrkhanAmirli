@@ -34,6 +34,19 @@
                         <p class="lead">
                             Get in touch and let us know how we can help. Fill out the form and we’ll be in touch as soon as possible.
                         </p>
+                        @{
+                            if (TempData["MessageError"] != null)
+                            {
+                                <p style="font-size: 20px !important;" class="text-danger">@TempData["MessageError"]</p>
+                                TempData["MessageError"] = null;
+                            }
+                            if (TempData["MessageSuccess"] != null)
+                            {
+                                <p style="font-size: 20px !important;" class="text-success">@TempData["MessageSuccess"]</p>
+                                TempData["MessageSuccess"] = null;
+                            }
+                        }
+
                     </div>
                 </div>
                 <div class="contact-form-wrapper">
@@ -41,34 +54,34 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="form-group mb-4">
+                                    <span class="text-danger MessageRequired">*</span>
                                     <div class="input-group input-group-alternative">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-user-run"></i></span>
                                         </div>
                                         <input class="form-control" placeholder="First Name" asp-for="@Model.Message.FirstName">
-                                        <div asp-validation-summary="ModelOnly"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group mb-4">
+                                    <span class="text-danger MessageRequired">*</span>
                                     <div class="input-group input-group-alternative">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-user-run"></i></span>
                                         </div>
                                         <input class="form-control" placeholder="Last Name" asp-for="@Model.Message.LastName">
-                                        <div asp-validation-summary="ModelOnly"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group mb-4">
+                                    <span class="text-danger MessageRequired">*</span>
                                     <div class="input-group input-group-alternative">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                         </div>
                                         <input class="form-control" placeholder="Email address" asp-for="@Model.Message.Email">
-                                        <div asp-validation-summary="ModelOnly"></div>
                                     </div>
                                 </div>
                             </div>
@@ -76,14 +89,15 @@
                                 <div class="form-group mb-4">
                                     <div class="input-group input-group-alternative">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-user-run"></i></span>
+                                            <span class="input-group-text MessageRequired"><i class="ni ni-user-run"></i></span>
                                         </div>
                                         <input class="form-control" placeholder="Subject" asp-for="@Model.Message.Subject">
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group mb-4">
+                        <div class="form-group mb-4 position-relative">
+                            <span style="top: -11px !important; left: -15px !important;" class="text-danger position-absolute">*</span>
                             <textarea class="form-control form-control-alternative" asp-for="@Model.Message.Content" rows="4" cols="80" placeholder="Type a message..."></textarea>
                         </div>
                         <div>

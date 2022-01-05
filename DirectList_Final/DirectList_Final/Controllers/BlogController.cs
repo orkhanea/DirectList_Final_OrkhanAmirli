@@ -18,13 +18,19 @@ namespace DirectList_Final.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(string Searchdata)
         {
             VmBlog model = new();
-            model.Blog = _context.Blogs.ToList();
-            model.Banner = _context.Banners.FirstOrDefault(b => b.Page == "Blog Deatil");
+            model.Blog = _context.Blogs.Where(b=>(Searchdata!=null?b.Title.Contains(Searchdata):true)).OrderByDescending(b=>b.CreatedDate).ToList();
+            model.Banner = _context.Banners.FirstOrDefault(b => b.Page == "Blog");
             model.Setting = _context.Settings.FirstOrDefault();
             model.SiteSocial = _context.SiteSocials.ToList();
+
+            if (model.Blog.Count == 0)
+            {
+                TempData["BlogSearchError"] = "Your search did not match any of them";
+            }
+
             return View(model);
         }
 
@@ -36,7 +42,7 @@ namespace DirectList_Final.Controllers
                 if (model!=null)
                 {
                     ViewBag.LastestBlogs = _context.Blogs.Take(3).OrderByDescending(b => b.CreatedDate).ToList();
-                    model.Banner = _context.Banners.FirstOrDefault(b => b.Page == "Blog Deatil");
+                    model.Banner = _context.Banners.FirstOrDefault(b => b.Page == "Blog Detail");
                     model.Setting = _context.Settings.FirstOrDefault();
                     model.SiteSocial = _context.SiteSocials.ToList();
                     model.SingleBlog1 = _context.Blogs.Include(cu => cu.CustomUser)

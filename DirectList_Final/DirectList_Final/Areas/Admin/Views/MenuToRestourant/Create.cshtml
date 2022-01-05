@@ -1,0 +1,52 @@
+﻿@model VmMenu
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+
+<p class="text-center text-facebook m-0 mt-4" style="font-size: 24px !important; font-weight: 600 !important;">@Model.Restourants2.Name</p>
+
+<form class="align-items-center d-flex flex-column mb-5 p-5" asp-area="Admin" asp-controller="MenuToRestourant" asp-action="Create" method="post">
+    @{
+        if (TempData["RMenuError2"] != null)
+        {
+            <p style="font-size: 20px !important;" class="alert alert-danger">@TempData["RMenuError2"]</p>
+
+            TempData["RMenuError2"] = null;
+        }
+    }
+    <div class="border border-primary d-flex flex-column mb-5 p-5 w-50">
+        <label asp-for="@Model.MenuNameId" class="font-weight-bold text-facebook pl-1 form-label">Menu Name</label>
+        <select asp-for="@Model.MenuNameId" class="form-control form-control-sm form-select form-select-sm" aria-label=".form-select-sm example">
+            <option selected>Open this select menu</option>
+            @{
+                foreach (var m in Model.Menus)
+                {
+                    <option value="@m.Id">@m.MenuName</option>
+                }
+            }
+        </select>
+        <span style=" font-size: 13px !important; font-weight: 600 !important;" class="text-danger" asp-validation-for="@Model.MenuNameId"></span>
+
+        <div>
+            <div class="my-3">
+                <label asp-for="@Model.MenuIngrediend" class="font-weight-medium  form-label">Ingrediend</label>
+                <textarea class="form-control" asp-for="@Model.MenuIngrediend"></textarea>
+                <span style=" font-size: 13px !important; font-weight: 600 !important;" class="text-danger" asp-validation-for="@Model.MenuIngrediend"></span>
+            </div>
+
+            <div>
+                <label asp-for="@Model.MenuPrice" class="font-weight-medium  form-label">Price</label>
+                <input class="form-control" asp-for="@Model.MenuPrice">
+                <span style=" font-size: 13px !important; font-weight: 600 !important;" class="text-danger" asp-validation-for="@Model.MenuPrice"></span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <input type="hidden" asp-for="@Model.RestourantId" value="@Model.Restourants2.Id" />
+
+    <button type="submit" class="btn btn-sm btn-success w-25">Add</button>
+</form>
+

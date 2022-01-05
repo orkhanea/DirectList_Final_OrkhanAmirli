@@ -1,0 +1,299 @@
+﻿@inject UserManager<IdentityUser> userManager
+@inject SignInManager<IdentityUser> signInManager
+@inject AppDbContext context 
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Spica Admin</title>
+    <!-- base:css -->
+    <link rel="stylesheet" href="~/Areas/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/Areas/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <script src="https://kit.fontawesome.com/2222b3b081.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="//cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/Areas/css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="~/Areas/images/favicon.png" />
+</head>
+<body>
+    <div class="container-scroller d-flex">
+        <!-- partial:./partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+                <li class="nav-item sidebar-category">
+                    <p>Navigation</p>
+                    <span></span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                        <i class="mdi mdi-home menu-icon"></i>
+                        <span class="menu-title">Home Page</span>
+                    </a>
+                </li>
+                <li class="nav-item sidebar-category">
+                    <p>Components</p>
+                    <span></span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                        <i class="fas fa-cog menu-icon"></i>
+                        <span class="menu-title">Site Settings</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="ui-basic">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" asp-controller="SiteSetting" asp-action="Index">Setting</a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-controller="SiteSocial" asp-action="Index">Site socials</a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-controller="Banner" asp-action="Index">Banner</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#Restourant" aria-expanded="false" aria-controls="Restourant">
+                        <i class="mdi mdi-palette menu-icon"></i>
+                        <span class="menu-title">Restourant</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="Restourant">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" asp-controller="Restourant" asp-action="Index">Restourants</a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-controller="Menu" asp-action="Index">Menu list</a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-controller="MenuToRestourant" asp-action="Index">Make Menu & Price</a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-controller="RestourantTag" asp-action="Index">Restourant Tags</a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-controller="RestourantFeatureC" asp-action="Index">Restourant Features</a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-controller="Guest" asp-action="Index">Guest Counts</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Blog" asp-action="Index">
+                        <i class="mdi mdi-blogger menu-icon"></i>
+                        <span class="menu-title">Blogs</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Contact" asp-action="Index">
+                        <i class="mdi mdi-contact-mail menu-icon"></i>
+                        <span class="menu-title">Contact Us</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="About" asp-action="index">
+                        <i class="mdi mdi-chart-pie menu-icon"></i>
+                        <span class="menu-title">About</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Message" asp-action="Index">
+                        <i class="mdi mdi-message-text menu-icon"></i>
+                        <span class="menu-title">Messages</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Plan" asp-action="Index">
+                        <i class="mdi mdi-android-studio menu-icon"></i>
+                        <span class="menu-title">Plan</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Process" asp-action="Index">
+                        <i class="mdi mdi-cloud-sync menu-icon"></i>
+                        <span class="menu-title">Process</span>
+                    </a>
+                </li>
+                <li class="nav-item sidebar-category">
+                    <p>Pages</p>
+                    <span></span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+                        <i class="mdi mdi-account menu-icon"></i>
+                        <span class="menu-title">User Pages</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="auth">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="Account" asp-action="Users"> Users </a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="Account" asp-action="Roles"> User Roles </a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="Account" asp-action="Login"> Login </a></li>
+                            <li class="nav-item"> <a class="nav-link" asp-area="Admin" asp-controller="Account" asp-action="Register"> Register </a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item sidebar-category">
+                    <p>Apps</p>
+                    <span></span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="docs/documentation.html">
+                        <i class="mdi mdi-file-document-box-outline menu-icon"></i>
+                        <span class="menu-title">Documentation</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://www.bootstrapdash.com/demo/spica/template/">
+                        <button class="btn bg-danger btn-sm menu-title">Upgrade to pro</button>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:./partials/_navbar.html -->
+            <nav class="navbar col-lg-12 col-12 px-0 py-0 py-lg-4 d-flex flex-row">
+                <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                        <span class="mdi mdi-menu"></span>
+                    </button>
+                    <div class="navbar-brand-wrapper">
+                        <a class="navbar-brand brand-logo" href="index.html"><img src="~/Areas/images/logo.svg" alt="logo" /></a>
+                        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="~/Areas/images/logo-mini.svg" alt="logo" /></a>
+                    </div>
+                    <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1">Welcome back, @context.CustomUsers.Find(userManager.GetUserId(User)).Name @context.CustomUsers.Find(userManager.GetUserId(User)).Surname</h4>
+                    <ul class="navbar-nav navbar-nav-right">
+                        <li class="nav-item">
+                            <h4 class="mb-0 font-weight-bold d-none d-xl-block">@DateTime.Now.ToString("MMM d, yyyy - dddd")</h4>
+                        </li>
+                        <li class="nav-item dropdown mr-1">
+                            <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
+                                <i class="mdi mdi-email-open mx-0"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" style=" width: 350px !important;" aria-labelledby="messageDropdown">
+                                <p class="mb-0 font-weight-normal float-left dropdown-header">Lastest 3 Messages</p>
+                                @{
+                                    var messages = context.Messages.OrderByDescending(m => m.CreatedDate).Take(3).ToList();
+                                    foreach (var m in messages)
+                                    {
+                                        <a asp-area="Admin" asp-controller="Message" asp-action="Read" asp-route-Id="@m.Id" class="dropdown-item preview-item">
+                                            <div class="preview-item-content flex-grow">
+                                                <h6 class="preview-subject ellipsis font-weight-normal">
+                                                    @m.FirstName @m.LastName
+                                                </h6>
+                                                <p class="font-weight-light small-text text-muted mb-0">
+                                                    @(m.Content.Length>20?m.Content.Substring(0,18)+"...":m.Content)
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <span style="font-size: 13px !important; color: #E39 !important;">
+                                                    @{
+                                                        var date = (DateTime.Now - m.CreatedDate);
+                                                        if (date.Days == 0)
+                                                        {
+                                                            if (date.Hours == 0)
+                                                            {
+                                                                if (date.Minutes == 0)
+                                                                {
+                                                                    @(date.Seconds) @(" seconds before")
+                                                                }
+                                                                else
+                                                                {
+                                                                    @(date.Minutes) @(" minutes before")
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                @(date.Hours) @(" hours before")
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            @(date.Days) @(" days before")
+                                                        }
+                                                    }
+                                                </span>
+                                            </div>
+                                        </a>
+                                    }
+                                }
+                            </div>
+                        </li>
+                    </ul>
+                    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                        <span class="mdi mdi-menu"></span>
+                    </button>
+                </div>
+                <div class="navbar-menu-wrapper navbar-search-wrapper d-none d-lg-flex align-items-center">
+                    <ul class="navbar-nav mr-lg-2">
+                        <li class="nav-item nav-search d-none d-lg-block">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search Here..." aria-label="search" aria-describedby="search">
+                            </div>
+                        </li>
+                    </ul>
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        <ul class="navbar-nav navbar-nav-right">
+                            <li class="nav-item nav-profile dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                                    <img src="~/assets/images/@(context.CustomUsers.Find(userManager.GetUserId(User)).Image==null?"default-avatar.png":context.CustomUsers.Find(userManager.GetUserId(User)).Image)" alt="profile" />
+                                    <span class="nav-profile-name">@userManager.GetUserName(User)</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Account" asp-action="Logout">
+                                        <i class="mdi mdi-logout text-primary"></i>
+                                        Logout
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    }
+
+                </div>
+            </nav>
+            <!-- partial -->
+            <div class="main-panel">
+                @RenderBody()
+                <!-- content-wrapper ends -->
+                <!-- partial:./partials/_footer.html -->
+                <footer class="footer" style="padding-top: 1.937rem !important;">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                                <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © bootstrapdash.com 2020</span>
+                                <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Distributed By: <a href="https://www.themewagon.com/" target="_blank">ThemeWagon</a></span>
+                                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Free <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap dashboard templates</a> from Bootstrapdash.com</span>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- base:js -->
+    <script src="~/Areas/vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <script src="~/Areas/vendors/chart.js/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="~/Areas/js/off-canvas.js"></script>
+    <script src="~/Areas/js/hoverable-collapse.js"></script>
+    <script src="~/Areas/js/template.js"></script>
+    <!-- endinject -->
+    <!-- plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="~/Areas/js/dashboard.js"></script>
+    <script src="~/Areas/js/CustomJQ.js"></script>
+    <!-- End custom js for this page-->
+</body>
+
+</html>
